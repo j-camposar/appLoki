@@ -1,0 +1,48 @@
+version: "3.8"
+services:
+  loki:
+    image: grafana/loki:2.8.2
+    container_name: loki
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./config/loki-config.yml:/etc/loki/local-config.yaml:ro
+      - loki_data:/loki
+    command: -config.file=/etc/loki/local-config.yaml
+
+  promtail:
+    image: grafana/promtail:2.8.2
+    container_name: promtail
+    volumes:
+      - ./config/promtail-config.yml:/etc/promtail/config.yml:ro
+      # montamos el directorio de logs de la app para que promtail lo lea
+      - ./logs:/var/log/app:ro
+    command: -config.file=/etc/promtail/config.yml
+    depends_on:
+      - loki
+
+  grafana:
+    image: grafana/grafana:9.5.0
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - loki
+
+  app:
+    build:
+      context: ./app
+    container_name: demo_app
+    volumes:
+      - ./logs:/var/log/app
+    environment:
+      - PORT=8080
+    ports:
+      - "8080:8080"
+    command: ["node", "index.js"]
+
+volumes:
+  loki_data:
