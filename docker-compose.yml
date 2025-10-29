@@ -7,7 +7,8 @@ services:
       - "3100:3100"
     volumes:
       - ./config/loki-config.yml:/etc/loki/local-config.yaml:ro
-      - loki_data:/loki             # monta volumen para index/chunks
+      - ./loki_data:/loki        # volumen para index/chunks
+      - ./wal_data:/wal          # volumen para WAL
     command: -config.file=/etc/loki/local-config.yaml
   promtail:
     image: grafana/promtail:2.8.2

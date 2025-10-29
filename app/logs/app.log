@@ -1,1 +1,5 @@
-2025-10-29T18:27:07.548Z [INFO] App activa en puerto 8080
+2025-10-29T19:23:06.318Z [INFO] root hit
+2025-10-29T19:24:02.368Z [ERROR] Simula un log de error
+2025-10-29T19:24:34.154Z [INFO] usario de id: 1 visito la pagina
+2025-10-29T19:34:08.814Z [INFO] root hit
+2025-10-29T19:34:17.343Z [INFO] usario de id: 1 visito la pagina
