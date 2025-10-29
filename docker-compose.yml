@@ -9,10 +9,6 @@ services:
       - ./config/loki-config.yml:/etc/loki/local-config.yaml:ro
       - loki_data:/loki             # monta volumen para index/chunks
     command: -config.file=/etc/loki/local-config.yaml
-
-volumes:
-  loki_data:
-
   promtail:
     image: grafana/promtail:2.8.2
     container_name: promtail
